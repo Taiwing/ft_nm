@@ -6,13 +6,16 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:42 by yforeau           #+#    #+#             */
-/*   Updated: 2022/12/15 12:09:12 by yforeau          ###   ########.fr       */
+/*   Updated: 2022/12/15 15:35:53 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <elf.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
 #include "libft.h"
 
 // ft_nm short options
@@ -37,6 +40,15 @@ typedef struct	s_nm_config
 	// exit status
 	int			exit_status;
 }				t_nm_config;
+
+/*
+** ft_nm's file type
+*/
+typedef struct	s_nm_file
+{
+	void		*data;	// file contents
+	size_t		size;	// size of the file
+}				t_nm_file;
 
 /*
 ** functions

@@ -6,23 +6,52 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:47 by yforeau           #+#    #+#             */
-/*   Updated: 2022/12/15 12:17:55 by yforeau          ###   ########.fr       */
+/*   Updated: 2022/12/15 15:38:14 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-void	nm(t_nm_config *cfg, char *file)
+int		get_binary_file(t_nm_file *dest, char *path, t_nm_config *cfg)
+{
+	int			fd;
+	struct stat	st;
+
+	if ((fd = open(path, O_RDONLY)) < 0)
+		return (!!ft_dprintf(2, "%s: %s: %s\n",
+			cfg->exec, path, strerror(errno)));
+	else if (fstat(fd, &st) < 0)
+	{
+		close(fd);
+		return (!!ft_dprintf(2, "%s: %s\n", cfg->exec, strerror(errno)));
+	}
+	else if ((dest->data = mmap(0, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0))
+		== MAP_FAILED)
+		ft_exit(EXIT_FAILURE, "mmap: %s", strerror(errno));
+	dest->size = st.st_size;
+	return (0);
+}
+
+void	nm(t_nm_config *cfg, char *path)
 {
 	/* TODO:
-	** - open file
+	** - open file and load binary data [DONE]
 	** - read elf magic number
 	** - read and load the rest of the elf header in the appropriate struct
 	** - if '-e' just print the header and LFG
 	** - read the rest of the file and print symbols in the required order
+	** - free the file and return
 	*/
-	(void)cfg;
-	(void)file;
+	t_nm_file	file;
+
+	if (get_binary_file(&file, path, cfg))
+	{
+		cfg->exit_status = EXIT_FAILURE;
+		return ;
+	}
+	//TODO: do the things, all the things
+	if (munmap(file.data, file.size) < 0)
+		ft_exit(EXIT_FAILURE, "munmap: %s", strerror(errno));
 }
 
 int		main(int argc, char **argv)
