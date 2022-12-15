@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 11:18:20 by yforeau           #+#    #+#             */
-/*   Updated: 2022/12/15 11:33:55 by yforeau          ###   ########.fr       */
+/*   Updated: 2022/12/15 12:11:19 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ const char	*g_nm_usage[] = {
 	NULL,
 };
 
-void		usage(const char *exec, int exit_value)
+static void		usage(const char *exec, int exit_value)
 {
 	const t_opt	*opts = g_nm_opt;
 	const char	**help = g_nm_help;
@@ -65,7 +65,7 @@ void		usage(const char *exec, int exit_value)
 	ft_exit(exit_value, NULL);
 }
 
-char		**parse_arguments(t_nm_config *cfg, int argc, char **argv)
+char			**parse_arguments(t_nm_config *cfg, int argc, char **argv)
 {
 	int			opt;
 	t_optdata	optd = { 0 };
@@ -74,7 +74,8 @@ char		**parse_arguments(t_nm_config *cfg, int argc, char **argv)
 	while ((opt = ft_getopt_long(argc, argv, &optd)) >= 0)
 		switch (opt)
 		{
-			case 'e': cfg->elfmode = 1;									break;
+			case 'e': cfg->elf_mode = 1;								break;
+			//TODO: parse other options
 			default: usage(cfg->exec, opt != 'h');						break;
 		}
 	return (argv + optd.optind);

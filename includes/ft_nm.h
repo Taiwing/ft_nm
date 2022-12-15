@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:42 by yforeau           #+#    #+#             */
-/*   Updated: 2022/12/15 11:34:05 by yforeau          ###   ########.fr       */
+/*   Updated: 2022/12/15 12:09:12 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ typedef struct	s_nm_config
 	// executable name
 	const char	*exec;
 	// boolean set to 1 if e option is passed
-	int			elfmode;
+	int			elf_mode;
+	// exit status
+	int			exit_status;
 }				t_nm_config;
 
 /*
