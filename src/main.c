@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:47 by yforeau           #+#    #+#             */
-/*   Updated: 2022/12/15 15:38:14 by yforeau          ###   ########.fr       */
+/*   Updated: 2022/12/15 15:42:03 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		get_binary_file(t_nm_file *dest, char *path, t_nm_config *cfg)
 		== MAP_FAILED)
 		ft_exit(EXIT_FAILURE, "mmap: %s", strerror(errno));
 	dest->size = st.st_size;
+	close(fd);
 	return (0);
 }
 
