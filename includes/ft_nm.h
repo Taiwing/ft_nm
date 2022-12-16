@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:42 by yforeau           #+#    #+#             */
-/*   Updated: 2022/12/15 15:35:53 by yforeau          ###   ########.fr       */
+/*   Updated: 2022/12/16 17:10:50 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,9 @@ extern const char		*g_nm_usage[];
 */
 typedef struct	s_nm_config
 {
-	// executable name
-	const char	*exec;
-	// boolean set to 1 if e option is passed
-	int			elf_mode;
-	// exit status
-	int			exit_status;
+	const char	*exec;			// executable name
+	int			elf_mode;		// boolean set to 1 if e option is passed
+	int			exit_status;	// value to exit on (success or failure)
 }				t_nm_config;
 
 /*
@@ -48,6 +45,8 @@ typedef struct	s_nm_file
 {
 	void		*data;	// file contents
 	size_t		size;	// size of the file
+	int			type;	// ELFCLASS32 or ELFCLASS64
+	uint64_t	shoff;	// section header offset
 }				t_nm_file;
 
 /*
