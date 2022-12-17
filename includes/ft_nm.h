@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:42 by yforeau           #+#    #+#             */
-/*   Updated: 2022/12/16 17:10:50 by yforeau          ###   ########.fr       */
+/*   Updated: 2022/12/17 20:10:52 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
+#include <endian.h>
 #include "libft.h"
 
 // ft_nm short options
@@ -39,14 +40,23 @@ typedef struct	s_nm_config
 }				t_nm_config;
 
 /*
+** Unionize elf headers, because it's easier this way
+*/
+typedef union	u_elf_hdr
+{
+	Elf32_Ehdr	hdr32;
+	Elf64_Ehdr	hdr64;
+}				s_elf_hdr;
+
+/*
 ** ft_nm's file type
 */
 typedef struct	s_nm_file
 {
 	void		*data;	// file contents
 	size_t		size;	// size of the file
-	int			type;	// ELFCLASS32 or ELFCLASS64
-	uint64_t	shoff;	// section header offset
+	int			class;	// ELFCLASS32 or ELFCLASS64
+	s_elf_hdr	elf;	// elf header loaded from file
 }				t_nm_file;
 
 /*
