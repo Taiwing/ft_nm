@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:47 by yforeau           #+#    #+#             */
-/*   Updated: 2022/12/17 20:43:16 by yforeau          ###   ########.fr       */
+/*   Updated: 2022/12/17 21:01:54 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	nm(t_nm_config *cfg, char *path)
 {
 	/* TODO:
 	** - open file and load binary data [DONE]
-	** - read elf magic number
+	** - read elf magic number [DONE]
 	** - read and load the rest of the elf header in the appropriate struct
 	** - if '-e' just print the header and LFG
 	** - read the rest of the file and print symbols in the required order
@@ -57,6 +57,13 @@ void	nm(t_nm_config *cfg, char *path)
 		return ;
 	}
 	//TODO: do the things, all the things
+	if (cfg->elf_mode)
+	{
+		if (file.class == ELFCLASS32)
+			print_elf32_header(&file.elf.hdr32);
+		else
+			print_elf64_header(&file.elf.hdr64);
+	}
 	if (munmap(file.data, file.size) < 0)
 		ft_exit(EXIT_FAILURE, "munmap: %s", strerror(errno));
 }

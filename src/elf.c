@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 20:43:23 by yforeau           #+#    #+#             */
-/*   Updated: 2022/12/17 20:47:01 by yforeau          ###   ########.fr       */
+/*   Updated: 2022/12/17 21:10:31 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,26 @@ int				read_elf_header(t_nm_file *dest, t_nm_config *cfg)
 		&& !load_elf64_header(&dest->elf.hdr64, dest->data))
 		return (0);
 	return (!!ft_dprintf(2, "%s: invalid elf header\n", cfg->exec));
+}
+
+void			print_elf32_header(Elf32_Ehdr *hdr)
+{
+	ft_printf("ELF Header:\n");
+	ft_printf("  Magic:  %16t %02hhx\n", hdr->e_ident);
+	ft_printf("  %-34s ELF32\n", "Class:");
+	ft_printf("  %-34s 2's complement, %s endian\n", "Data:",
+		hdr->e_ident[EI_DATA] == ELFDATA2LSB ? "little" : "big");
+	ft_printf("  %-34s %d%s\n", "Version:", hdr->e_version,
+		hdr->e_version == EV_CURRENT ? " (current)" : "");
+}
+
+void			print_elf64_header(Elf64_Ehdr *hdr)
+{
+	ft_printf("ELF Header:\n");
+	ft_printf("  Magic:  %16t %02hhx\n", hdr->e_ident);
+	ft_printf("  %-34s ELF64\n", "Class:");
+	ft_printf("  %-34s 2's complement, %s endian\n", "Data:",
+		hdr->e_ident[EI_DATA] == ELFDATA2LSB ? "little" : "big");
+	ft_printf("  %-34s %d%s\n", "Version:", hdr->e_version,
+		hdr->e_version == EV_CURRENT ? " (current)" : "");
 }

@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:42 by yforeau           #+#    #+#             */
-/*   Updated: 2022/12/17 20:43:51 by yforeau          ###   ########.fr       */
+/*   Updated: 2022/12/17 21:02:20 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct	s_nm_config
 }				t_nm_config;
 
 /*
-** Unionize elf headers, because it's easier this way
+** Unionize elf headers, because it's easier this way and because Karl said so
 */
 typedef union	u_elf_hdr
 {
@@ -53,10 +53,10 @@ typedef union	u_elf_hdr
 */
 typedef struct	s_nm_file
 {
-	void		*data;	// file contents
-	size_t		size;	// size of the file
-	int			class;	// ELFCLASS32 or ELFCLASS64
-	s_elf_hdr	elf;	// elf header loaded from file
+	void		*data;			// file contents
+	size_t		size;			// size of the file
+	int			class;			// ELFCLASS32 or ELFCLASS64
+	s_elf_hdr	elf;			// elf header loaded from file
 }				t_nm_file;
 
 /*
@@ -64,3 +64,5 @@ typedef struct	s_nm_file
 */
 char	**parse_arguments(t_nm_config *cfg, int argc, char **argv);
 int		read_elf_header(t_nm_file *dest, t_nm_config *cfg);
+void	print_elf32_header(Elf32_Ehdr *hdr);
+void	print_elf64_header(Elf64_Ehdr *hdr);
