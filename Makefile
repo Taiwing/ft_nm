@@ -13,6 +13,7 @@ NAME		=	ft_nm
 ############################## SOURCES #########################################
 
 SRCC			=	main.c\
+					elf.c\
 					options.c\
 
 ODIR			=	obj
@@ -34,6 +35,7 @@ $(SUB1D)/libft.a:
 	make -C $(SUB1D)
 
 main.o: ft_nm.h libft.h
+elf.o: ft_nm.h libft.h
 options.o: ft_nm.h libft.h
 %.o: %.c
 	@mkdir -p $(ODIR)

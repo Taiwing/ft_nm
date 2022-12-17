@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:42 by yforeau           #+#    #+#             */
-/*   Updated: 2022/12/17 20:10:52 by yforeau          ###   ########.fr       */
+/*   Updated: 2022/12/17 20:43:51 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,3 +63,4 @@ typedef struct	s_nm_file
 ** functions
 */
 char	**parse_arguments(t_nm_config *cfg, int argc, char **argv);
+int		read_elf_header(t_nm_file *dest, t_nm_config *cfg);
