@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:42 by yforeau           #+#    #+#             */
-/*   Updated: 2022/12/17 21:02:20 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/01/03 19:23:26 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@
 #include "libft.h"
 
 // ft_nm short options
-#define	FT_NM_OPT	"eagurph"
+#define	FT_NM_OPT		"eagurph"
+
+#define ELF_OSABI_MAX	0x12
 
 /*
 ** ft_nm constants

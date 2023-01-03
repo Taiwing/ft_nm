@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 20:43:23 by yforeau           #+#    #+#             */
-/*   Updated: 2022/12/17 21:10:31 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/01/03 19:24:52 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ static int		load_elf32_header(Elf32_Ehdr *dest, Elf32_Ehdr *raw)
 	if (ft_memcmp(raw->e_ident, ELFMAG, 4)
 		|| (raw->e_ident[EI_DATA] != ELFDATA2LSB
 		&& raw->e_ident[EI_DATA] != ELFDATA2MSB)
-		|| raw->e_ident[EI_VERSION] != EV_CURRENT)
+		|| raw->e_ident[EI_VERSION] != EV_CURRENT
+		|| raw->e_ident[EI_OSABI] == 0x05
+		|| raw->e_ident[EI_OSABI] > ELF_OSABI_MAX)
 		return (1);
 	ft_memcpy(dest, raw, sizeof(Elf32_Ehdr));
 	if ((__BYTE_ORDER == __LITTLE_ENDIAN
@@ -71,7 +73,9 @@ static int		load_elf64_header(Elf64_Ehdr *dest, Elf64_Ehdr *raw)
 	if (ft_memcmp(raw->e_ident, ELFMAG, 4)
 		|| (raw->e_ident[EI_DATA] != ELFDATA2LSB
 		&& raw->e_ident[EI_DATA] != ELFDATA2MSB)
-		|| raw->e_ident[EI_VERSION] != EV_CURRENT)
+		|| raw->e_ident[EI_VERSION] != EV_CURRENT
+		|| raw->e_ident[EI_OSABI] == 0x05
+		|| raw->e_ident[EI_OSABI] > ELF_OSABI_MAX)
 		return (1);
 	ft_memcpy(dest, raw, sizeof(Elf64_Ehdr));
 	if ((__BYTE_ORDER == __LITTLE_ENDIAN
@@ -98,6 +102,28 @@ int				read_elf_header(t_nm_file *dest, t_nm_config *cfg)
 	return (!!ft_dprintf(2, "%s: invalid elf header\n", cfg->exec));
 }
 
+const char		*g_nm_osabi[ELF_OSABI_MAX + 1] = {
+	"System V",
+	"HP-UX",
+	"NetBSD",
+	"Linux",
+	"GNU Hurd",
+	NULL,
+	"Solaris",
+	"AIX (Monterey)",
+	"IRIX",
+	"FreeBSD",
+	"Tru64",
+	"Novell Modesto",
+	"OpenBSD",
+	"OpenVMS",
+	"NonStop Kernel",
+	"AROS",
+	"FenixOS",
+	"Nuxi CloudABI",
+	"Stratus Technologies OpenVOS",
+};
+
 void			print_elf32_header(Elf32_Ehdr *hdr)
 {
 	ft_printf("ELF Header:\n");
@@ -107,6 +133,9 @@ void			print_elf32_header(Elf32_Ehdr *hdr)
 		hdr->e_ident[EI_DATA] == ELFDATA2LSB ? "little" : "big");
 	ft_printf("  %-34s %d%s\n", "Version:", hdr->e_version,
 		hdr->e_version == EV_CURRENT ? " (current)" : "");
+	ft_printf("  %-34s UNIX - %s\n", "OS/ABI:",
+		g_nm_osabi[hdr->e_ident[EI_OSABI]]);
+	ft_printf("  %-34s %d\n", "ABI Version:", hdr->e_ident[EI_PAD]);
 }
 
 void			print_elf64_header(Elf64_Ehdr *hdr)
@@ -118,4 +147,7 @@ void			print_elf64_header(Elf64_Ehdr *hdr)
 		hdr->e_ident[EI_DATA] == ELFDATA2LSB ? "little" : "big");
 	ft_printf("  %-34s %d%s\n", "Version:", hdr->e_version,
 		hdr->e_version == EV_CURRENT ? " (current)" : "");
+	ft_printf("  %-34s UNIX - %s\n", "OS/ABI:",
+		g_nm_osabi[hdr->e_ident[EI_OSABI]]);
+	ft_printf("  %-34s %d\n", "ABI Version:", hdr->e_ident[EI_PAD]);
 }
