@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 20:43:23 by yforeau           #+#    #+#             */
-/*   Updated: 2023/01/03 19:24:52 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/01/05 19:40:15 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,21 @@ const char		*g_nm_osabi[ELF_OSABI_MAX + 1] = {
 	"Stratus Technologies OpenVOS",
 };
 
+const char		*g_nm_type[] = {
+	[ET_NONE] = "NONE (None)",
+	[ET_REL] = "REL (Relocatable file)",
+	[ET_EXEC] = "EXEC (Executable file)",
+	[ET_DYN] = "DYN (Shared object file)",
+	[ET_CORE] = "CORE (Core file)",
+	[ET_CORE + 1] = "OS Specific: (%x)",
+	[ET_CORE + 2] = "Processor Specific: (%x)",
+	[ET_CORE + 3] = "<unknown>: %x",
+};
+
 void			print_elf32_header(Elf32_Ehdr *hdr)
 {
+	unsigned int	type_index = ET_CORE + 3;
+
 	ft_printf("ELF Header:\n");
 	ft_printf("  Magic:  %16t %02hhx\n", hdr->e_ident);
 	ft_printf("  %-34s ELF32\n", "Class:");
@@ -136,10 +149,21 @@ void			print_elf32_header(Elf32_Ehdr *hdr)
 	ft_printf("  %-34s UNIX - %s\n", "OS/ABI:",
 		g_nm_osabi[hdr->e_ident[EI_OSABI]]);
 	ft_printf("  %-34s %d\n", "ABI Version:", hdr->e_ident[EI_PAD]);
+	ft_printf("  %-34s ", "Type:");
+	if (hdr->e_type <= ET_CORE)
+		type_index = hdr->e_type;
+	else if (hdr->e_type >= ET_LOOS && hdr->e_type <= ET_HIOS)
+		type_index = ET_CORE + 1;
+	else if (hdr->e_type >= ET_LOPROC)
+		type_index = ET_CORE + 2;
+	ft_printf(g_nm_type[type_index], hdr->e_type);
+	ft_printf("\n");
 }
 
 void			print_elf64_header(Elf64_Ehdr *hdr)
 {
+	unsigned int	type_index = ET_CORE + 3;
+
 	ft_printf("ELF Header:\n");
 	ft_printf("  Magic:  %16t %02hhx\n", hdr->e_ident);
 	ft_printf("  %-34s ELF64\n", "Class:");
@@ -150,4 +174,13 @@ void			print_elf64_header(Elf64_Ehdr *hdr)
 	ft_printf("  %-34s UNIX - %s\n", "OS/ABI:",
 		g_nm_osabi[hdr->e_ident[EI_OSABI]]);
 	ft_printf("  %-34s %d\n", "ABI Version:", hdr->e_ident[EI_PAD]);
+	ft_printf("  %-34s ", "Type:");
+	if (hdr->e_type <= ET_CORE)
+		type_index = hdr->e_type;
+	else if (hdr->e_type >= ET_LOOS && hdr->e_type <= ET_HIOS)
+		type_index = ET_CORE + 1;
+	else if (hdr->e_type >= ET_LOPROC)
+		type_index = ET_CORE + 2;
+	ft_printf(g_nm_type[type_index], hdr->e_type);
+	ft_printf("\n");
 }
