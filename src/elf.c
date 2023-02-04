@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 20:43:23 by yforeau           #+#    #+#             */
-/*   Updated: 2023/02/04 19:08:53 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/02/04 19:14:13 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void			print_elf32_header(Elf32_Ehdr *hdr)
 	ft_printf("\n");
 	ft_printf("  %-34s ", "Machine:");
 	if (hdr->e_machine > EM_MACHINE_MAX || !g_nm_machine[hdr->e_machine])
-		ft_printf("<unknown>: %#x\n");
+		ft_printf("<unknown>: 0x%x\n", hdr->e_machine);
 	else
 		ft_printf("%s\n", g_nm_machine[hdr->e_machine]);
 }
@@ -157,7 +157,7 @@ void			print_elf64_header(Elf64_Ehdr *hdr)
 	ft_printf("\n");
 	ft_printf("  %-34s ", "Machine:");
 	if (hdr->e_machine > EM_MACHINE_MAX || !g_nm_machine[hdr->e_machine])
-		ft_printf("<unknown>: %#x\n", hdr->e_machine);
+		ft_printf("<unknown>: 0x%x\n", hdr->e_machine);
 	else
 		ft_printf("%s\n", g_nm_machine[hdr->e_machine]);
 }
