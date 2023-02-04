@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 20:43:23 by yforeau           #+#    #+#             */
-/*   Updated: 2023/02/04 19:38:03 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/02/04 19:59:35 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,16 @@ void			print_elf32_header(Elf32_Ehdr *hdr)
 		"Start of program headers:", hdr->e_phoff);
 	ft_printf("  %-34s %lu (bytes into file)\n",
 		"Start of section headers:", hdr->e_shoff);
+	ft_printf("  %-34s 0x%lx\n", "Flags:", hdr->e_flags);
+	ft_printf("  %-34s %u (bytes)\n", "Size of this header:", hdr->e_ehsize);
+	ft_printf("  %-34s %u (bytes)\n",
+		"Size of program headers:", hdr->e_phentsize);
+	ft_printf("  %-34s %u\n", "Number of program headers:", hdr->e_phnum);
+	ft_printf("  %-34s %u (bytes)\n",
+		"Size of section headers:", hdr->e_shentsize);
+	ft_printf("  %-34s %u\n", "Number of section headers:", hdr->e_shnum);
+	ft_printf("  %-34s %u\n",
+		"Section header string table index:", hdr->e_shstrndx);
 }
 
 void			print_elf64_header(Elf64_Ehdr *hdr)
@@ -174,4 +184,14 @@ void			print_elf64_header(Elf64_Ehdr *hdr)
 		"Start of program headers:", hdr->e_phoff);
 	ft_printf("  %-34s %llu (bytes into file)\n",
 		"Start of section headers:", hdr->e_shoff);
+	ft_printf("  %-34s 0x%lx\n", "Flags:", hdr->e_flags);
+	ft_printf("  %-34s %u (bytes)\n", "Size of this header:", hdr->e_ehsize);
+	ft_printf("  %-34s %u (bytes)\n",
+		"Size of program headers:", hdr->e_phentsize);
+	ft_printf("  %-34s %u\n", "Number of program headers:", hdr->e_phnum);
+	ft_printf("  %-34s %u (bytes)\n",
+		"Size of section headers:", hdr->e_shentsize);
+	ft_printf("  %-34s %u\n", "Number of section headers:", hdr->e_shnum);
+	ft_printf("  %-34s %u\n",
+		"Section header string table index:", hdr->e_shstrndx);
 }
