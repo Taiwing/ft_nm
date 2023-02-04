@@ -14,6 +14,7 @@ NAME		=	ft_nm
 
 SRCC			=	main.c\
 					elf.c\
+					strings.c\
 					options.c\
 
 ODIR			=	obj
@@ -36,6 +37,7 @@ $(SUB1D)/libft.a:
 
 main.o: ft_nm.h libft.h
 elf.o: ft_nm.h libft.h
+strings.o: ft_nm.h libft.h
 options.o: ft_nm.h libft.h
 %.o: %.c
 	@mkdir -p $(ODIR)

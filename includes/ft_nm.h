@@ -6,13 +6,14 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:42 by yforeau           #+#    #+#             */
-/*   Updated: 2023/01/03 19:27:31 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/02/04 18:43:55 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <elf.h>
+#include <linux/elf-em.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
@@ -31,6 +32,11 @@
 extern const t_opt		g_nm_opt[];
 extern const char		*g_nm_help[];
 extern const char		*g_nm_usage[];
+extern const char		*g_nm_osabi[ELF_OSABI_MAX + 1];
+extern const char		*g_nm_type[];
+extern const char		*g_nm_machine[];
+
+#define EM_MACHINE_MAX	EM_CSKY
 
 /*
 ** ft_nm's global configuration
