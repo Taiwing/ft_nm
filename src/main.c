@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:47 by yforeau           #+#    #+#             */
-/*   Updated: 2022/12/17 21:01:54 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/02/04 20:21:55 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int		get_binary_file(t_nm_file *dest, char *path, t_nm_config *cfg)
 		close(fd);
 		return (!!ft_dprintf(2, "%s: %s\n", cfg->exec, strerror(errno)));
 	}
-	else if ((dest->size = st.st_size) < sizeof(Elf32_Ehdr))
+	else if ((dest->size = st.st_size) < EI_NIDENT)
 	{
 		close(fd);
 		return (!!ft_dprintf(2, "%s: file too small\n", cfg->exec));
@@ -43,9 +43,9 @@ void	nm(t_nm_config *cfg, char *path)
 	** - open file and load binary data [DONE]
 	** - read elf magic number [DONE]
 	** - read and load the rest of the elf header in the appropriate struct
-	** - if '-e' just print the header and LFG
+	** - if '-e' just print the header and LFG [DONE]
 	** - read the rest of the file and print symbols in the required order
-	** - free the file and return
+	** - free the file and return [DONE]
 	*/
 	t_nm_file	file = { 0 };
 

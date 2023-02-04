@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 20:43:23 by yforeau           #+#    #+#             */
-/*   Updated: 2023/02/04 19:59:35 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/02/04 20:25:26 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ static void		swap_elf64_header(Elf64_Ehdr *dest)
 	ft_memswap(&dest->e_shstrndx, sizeof(dest->e_shstrndx));
 }
 
-static int		load_elf32_header(Elf32_Ehdr *dest, Elf32_Ehdr *raw)
+static int		load_elf32_header(Elf32_Ehdr *dest, Elf32_Ehdr *raw,
+	size_t size)
 {
+	if (size < sizeof(Elf32_Ehdr))
+		return (1);
 	if (ft_memcmp(raw->e_ident, ELFMAG, 4)
 		|| (raw->e_ident[EI_DATA] != ELFDATA2LSB
 		&& raw->e_ident[EI_DATA] != ELFDATA2MSB)
@@ -68,8 +71,11 @@ static int		load_elf32_header(Elf32_Ehdr *dest, Elf32_Ehdr *raw)
 	return (0);
 }
 
-static int		load_elf64_header(Elf64_Ehdr *dest, Elf64_Ehdr *raw)
+static int		load_elf64_header(Elf64_Ehdr *dest, Elf64_Ehdr *raw,
+	size_t size)
 {
+	if (size < sizeof(Elf64_Ehdr))
+		return (1);
 	if (ft_memcmp(raw->e_ident, ELFMAG, 4)
 		|| (raw->e_ident[EI_DATA] != ELFDATA2LSB
 		&& raw->e_ident[EI_DATA] != ELFDATA2MSB)
@@ -94,10 +100,10 @@ int				read_elf_header(t_nm_file *dest, t_nm_config *cfg)
 {
 	dest->class = ((Elf32_Ehdr *)dest->data)->e_ident[EI_CLASS];
 	if (dest->class == ELFCLASS32
-		&& !load_elf32_header(&dest->elf.hdr32, dest->data))
+		&& !load_elf32_header(&dest->elf.hdr32, dest->data, dest->size))
 		return (0);
 	else if (dest->class == ELFCLASS64
-		&& !load_elf64_header(&dest->elf.hdr64, dest->data))
+		&& !load_elf64_header(&dest->elf.hdr64, dest->data, dest->size))
 		return (0);
 	return (!!ft_dprintf(2, "%s: invalid elf header\n", cfg->exec));
 }
