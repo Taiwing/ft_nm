@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 20:43:23 by yforeau           #+#    #+#             */
-/*   Updated: 2023/02/04 19:14:13 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/02/04 19:38:03 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ void			print_elf32_header(Elf32_Ehdr *hdr)
 	ft_printf("  %-34s 2's complement, %s endian\n", "Data:",
 		hdr->e_ident[EI_DATA] == ELFDATA2LSB ? "little" : "big");
 	ft_printf("  %-34s %d%s\n", "Version:", hdr->e_version,
-		hdr->e_version == EV_CURRENT ? " (current)" : "");
+		hdr->e_version == EV_CURRENT ? " (current)" :
+		hdr->e_version != EV_NONE ? " (unknown)" : "");
 	ft_printf("  %-34s UNIX - %s\n", "OS/ABI:",
 		g_nm_osabi[hdr->e_ident[EI_OSABI]]);
 	ft_printf("  %-34s %d\n", "ABI Version:", hdr->e_ident[EI_PAD]);
@@ -130,6 +131,12 @@ void			print_elf32_header(Elf32_Ehdr *hdr)
 		ft_printf("<unknown>: 0x%x\n", hdr->e_machine);
 	else
 		ft_printf("%s\n", g_nm_machine[hdr->e_machine]);
+	ft_printf("  %-34s 0x%lx\n", "Version:", hdr->e_version);
+	ft_printf("  %-34s 0x%lx\n", "Entry point address:", hdr->e_entry);
+	ft_printf("  %-34s %lu (bytes into file)\n",
+		"Start of program headers:", hdr->e_phoff);
+	ft_printf("  %-34s %lu (bytes into file)\n",
+		"Start of section headers:", hdr->e_shoff);
 }
 
 void			print_elf64_header(Elf64_Ehdr *hdr)
@@ -142,7 +149,8 @@ void			print_elf64_header(Elf64_Ehdr *hdr)
 	ft_printf("  %-34s 2's complement, %s endian\n", "Data:",
 		hdr->e_ident[EI_DATA] == ELFDATA2LSB ? "little" : "big");
 	ft_printf("  %-34s %d%s\n", "Version:", hdr->e_version,
-		hdr->e_version == EV_CURRENT ? " (current)" : "");
+		hdr->e_version == EV_CURRENT ? " (current)" :
+		hdr->e_version != EV_NONE ? " (unknown)" : "");
 	ft_printf("  %-34s UNIX - %s\n", "OS/ABI:",
 		g_nm_osabi[hdr->e_ident[EI_OSABI]]);
 	ft_printf("  %-34s %d\n", "ABI Version:", hdr->e_ident[EI_PAD]);
@@ -160,4 +168,10 @@ void			print_elf64_header(Elf64_Ehdr *hdr)
 		ft_printf("<unknown>: 0x%x\n", hdr->e_machine);
 	else
 		ft_printf("%s\n", g_nm_machine[hdr->e_machine]);
+	ft_printf("  %-34s 0x%lx\n", "Version:", hdr->e_version);
+	ft_printf("  %-34s 0x%llx\n", "Entry point address:", hdr->e_entry);
+	ft_printf("  %-34s %llu (bytes into file)\n",
+		"Start of program headers:", hdr->e_phoff);
+	ft_printf("  %-34s %llu (bytes into file)\n",
+		"Start of section headers:", hdr->e_shoff);
 }
