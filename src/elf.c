@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 20:43:23 by yforeau           #+#    #+#             */
-/*   Updated: 2023/02/04 20:25:26 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/03/27 12:43:23 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static void		swap_elf64_header(Elf64_Ehdr *dest)
 static int		load_elf32_header(Elf32_Ehdr *dest, Elf32_Ehdr *raw,
 	size_t size)
 {
+	uint64_t	ph_total_size, sh_total_size;
+
 	if (size < sizeof(Elf32_Ehdr))
 		return (1);
 	if (ft_memcmp(raw->e_ident, ELFMAG, 4)
@@ -67,13 +69,23 @@ static int		load_elf32_header(Elf32_Ehdr *dest, Elf32_Ehdr *raw,
 	if (dest->e_version != (uint32_t)dest->e_ident[EI_VERSION]
 		|| dest->e_ehsize != sizeof(Elf32_Ehdr))
 		return (1);
-	//TODO: check the other fields
+	ph_total_size = dest->e_phentsize * dest->e_phnum;
+	sh_total_size = dest->e_shentsize * dest->e_shnum;
+	if (dest->e_phoff > size || dest->e_shoff > size
+		|| SIZE_MAX - dest->e_phoff < ph_total_size
+		|| dest->e_phoff + ph_total_size > size
+		|| SIZE_MAX - dest->e_shoff < sh_total_size
+		|| dest->e_shoff + sh_total_size > size
+		|| dest->e_shstrndx >= dest->e_shnum)
+		return (1);
 	return (0);
 }
 
 static int		load_elf64_header(Elf64_Ehdr *dest, Elf64_Ehdr *raw,
 	size_t size)
 {
+	uint64_t	ph_total_size, sh_total_size;
+
 	if (size < sizeof(Elf64_Ehdr))
 		return (1);
 	if (ft_memcmp(raw->e_ident, ELFMAG, 4)
@@ -92,7 +104,15 @@ static int		load_elf64_header(Elf64_Ehdr *dest, Elf64_Ehdr *raw,
 	if (dest->e_version != (uint32_t)dest->e_ident[EI_VERSION]
 		|| dest->e_ehsize != sizeof(Elf64_Ehdr))
 		return (1);
-	//TODO: check the other fields
+	ph_total_size = dest->e_phentsize * dest->e_phnum;
+	sh_total_size = dest->e_shentsize * dest->e_shnum;
+	if (dest->e_phoff > size || dest->e_shoff > size
+		|| SIZE_MAX - dest->e_phoff < ph_total_size
+		|| dest->e_phoff + ph_total_size > size
+		|| SIZE_MAX - dest->e_shoff < sh_total_size
+		|| dest->e_shoff + sh_total_size > size
+		|| dest->e_shstrndx >= dest->e_shnum)
+		return (1);
 	return (0);
 }
 
