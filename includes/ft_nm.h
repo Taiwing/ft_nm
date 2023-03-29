@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:42 by yforeau           #+#    #+#             */
-/*   Updated: 2023/02/04 18:43:55 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/03/29 18:08:38 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,19 @@ extern const char		*g_nm_machine[];
 
 #define EM_MACHINE_MAX	EM_CSKY
 
+// symbol sorts
+enum e_nm_sorts { E_SORT_NONE = 0, E_SORT_DEFAULT, E_SORT_REVERSE };
+
 /*
 ** ft_nm's global configuration
 */
-typedef struct	s_nm_config
+typedef struct		s_nm_config
 {
-	const char	*exec;			// executable name
-	int			elf_mode;		// boolean set to 1 if e option is passed
-	int			exit_status;	// value to exit on (success or failure)
-}				t_nm_config;
+	const char		*exec;			// executable name
+	int				elf_mode;		// boolean set to 1 if e option is passed
+	enum e_nm_sorts	sort;			// symbol sort
+	int				exit_status;	// value to exit on (success or failure)
+}					t_nm_config;
 
 /*
 ** Unionize elf headers, because it's easier this way and because Karl said so

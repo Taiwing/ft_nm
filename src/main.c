@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:47 by yforeau           #+#    #+#             */
-/*   Updated: 2023/02/04 20:21:55 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/03/29 18:49:33 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,17 @@ static int		get_binary_file(t_nm_file *dest, char *path, t_nm_config *cfg)
 
 void	nm(t_nm_config *cfg, char *path)
 {
-	/* TODO:
-	** - open file and load binary data [DONE]
-	** - read elf magic number [DONE]
-	** - read and load the rest of the elf header in the appropriate struct
-	** - if '-e' just print the header and LFG [DONE]
-	** - read the rest of the file and print symbols in the required order
-	** - free the file and return [DONE]
-	*/
 	t_nm_file	file = { 0 };
 
 	if (get_binary_file(&file, path, cfg) || read_elf_header(&file, cfg))
+		//|| (!cfg->elf_mode && list_symbols(&file, cfg)))
 	{
 		cfg->exit_status = EXIT_FAILURE;
 		if (file.data && munmap(file.data, file.size) < 0)
 			ft_exit(EXIT_FAILURE, "munmap: %s", strerror(errno));
 		return ;
 	}
-	//TODO: do the things, all the things
+	//TODO: read the rest of the file and print symbols in the required order
 	if (cfg->elf_mode)
 	{
 		if (file.class == ELFCLASS32)
@@ -73,6 +66,7 @@ int		main(int argc, char **argv)
 	char		**args = NULL;
 	t_nm_config	cfg = {
 		.exec = *argv,
+		.sort = E_SORT_DEFAULT,
 		.exit_status = EXIT_SUCCESS,
 	};
 

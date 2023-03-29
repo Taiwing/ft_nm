@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 11:18:20 by yforeau           #+#    #+#             */
-/*   Updated: 2022/12/15 12:11:19 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/03/29 18:48:43 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ char			**parse_arguments(t_nm_config *cfg, int argc, char **argv)
 		switch (opt)
 		{
 			case 'e': cfg->elf_mode = 1;								break;
+			case 'r': cfg->sort = E_SORT_REVERSE;						break;
+			case 'p': cfg->sort = E_SORT_NONE;							break;
 			//TODO: parse other options
 			default: usage(cfg->exec, opt != 'h');						break;
 		}
