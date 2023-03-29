@@ -32,7 +32,7 @@ does this by reading the *.symtab* and *.dynsym* sections of the binaries. A
 symbol can be a variable, a function or some arbitrary debugging information
 (like file names for example).
 
-### The types
+### Types
 
 Each symbol is associated a letter which represents its type (where it resides
 in the binary, if it has been initialized, wether it is global or local,
