@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 20:43:23 by yforeau           #+#    #+#             */
-/*   Updated: 2023/03/27 12:43:23 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/03/29 19:20:01 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ static int		load_elf32_header(Elf32_Ehdr *dest, Elf32_Ehdr *raw,
 		&& raw->e_ident[EI_DATA] == ELFDATA2LSB))
 		swap_elf32_header(dest);
 	if (dest->e_version != (uint32_t)dest->e_ident[EI_VERSION]
-		|| dest->e_ehsize != sizeof(Elf32_Ehdr))
+		|| dest->e_ehsize != sizeof(Elf32_Ehdr)
+		|| dest->e_shentsize != sizeof(Elf32_Shdr))
 		return (1);
 	ph_total_size = dest->e_phentsize * dest->e_phnum;
 	sh_total_size = dest->e_shentsize * dest->e_shnum;
@@ -102,7 +103,8 @@ static int		load_elf64_header(Elf64_Ehdr *dest, Elf64_Ehdr *raw,
 		&& raw->e_ident[EI_DATA] == ELFDATA2LSB))
 		swap_elf64_header(dest);
 	if (dest->e_version != (uint32_t)dest->e_ident[EI_VERSION]
-		|| dest->e_ehsize != sizeof(Elf64_Ehdr))
+		|| dest->e_ehsize != sizeof(Elf64_Ehdr)
+		|| dest->e_shentsize != sizeof(Elf64_Shdr))
 		return (1);
 	ph_total_size = dest->e_phentsize * dest->e_phnum;
 	sh_total_size = dest->e_shentsize * dest->e_shnum;
