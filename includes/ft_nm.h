@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:42 by yforeau           #+#    #+#             */
-/*   Updated: 2023/03/29 18:08:38 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/03/31 12:24:14 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,16 @@ typedef struct	s_nm_file
 	int			class;			// ELFCLASS32 or ELFCLASS64
 	s_elf_hdr	elf;			// elf header loaded from file
 }				t_nm_file;
+
+/*
+** symbol
+*/
+typedef struct	s_nm_symbol
+{
+	char		*name;
+	char		type;
+	uint64_t	value;
+}				t_nm_symbol;
 
 /*
 ** functions

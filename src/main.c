@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:47 by yforeau           #+#    #+#             */
-/*   Updated: 2023/03/29 18:49:33 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/03/31 11:24:19 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		main(int argc, char **argv)
 {
 	char		**args = NULL;
 	t_nm_config	cfg = {
-		.exec = *argv,
+		.exec = ft_exec_name(*argv),
 		.sort = E_SORT_DEFAULT,
 		.exit_status = EXIT_SUCCESS,
 	};
