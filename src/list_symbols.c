@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 18:52:16 by yforeau           #+#    #+#             */
-/*   Updated: 2023/04/01 21:48:26 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/04/01 21:52:29 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int					list_symbols(t_nm_file *file, t_nm_config *cfg)
 		ft_lstdel(&symbols, delete_symbol);
 		return (1);
 	}
-	// SORT
+	// SORT (with strcoll)
 	// PRINT
 	for (t_list *ptr = symbols; ptr; ptr = ptr->next)
 	{
