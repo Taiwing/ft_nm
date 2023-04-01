@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:42 by yforeau           #+#    #+#             */
-/*   Updated: 2023/03/31 12:24:14 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/04/01 19:32:41 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ typedef struct	s_nm_file
 }				t_nm_file;
 
 /*
-** symbol
+** ft_nm symbol
 */
 typedef struct	s_nm_symbol
 {
-	char		*name;
-	char		type;
-	uint64_t	value;
+	char		*name;			// symbol name string
+	char		type;			// nm type letter
+	uint64_t	value;			// symbol value
 }				t_nm_symbol;
 
 /*
@@ -89,3 +89,11 @@ char	**parse_arguments(t_nm_config *cfg, int argc, char **argv);
 int		read_elf_header(t_nm_file *dest, t_nm_config *cfg);
 void	print_elf32_header(Elf32_Ehdr *hdr);
 void	print_elf64_header(Elf64_Ehdr *hdr);
+int		list_symbols(t_nm_file *file, t_nm_config *cfg);
+int		list32(t_list **dest, t_nm_file *file);
+int		list64(t_list **dest, t_nm_file *file);
+void	delete_symbol(void *symbol, size_t size);
+t_list	*push_symbol32(t_list **dest, Elf32_Sym *elf_symbol,
+		char *strtab, size_t size);
+t_list	*push_symbol64(t_list **dest, Elf64_Sym *elf_symbol,
+		char *strtab, size_t size);

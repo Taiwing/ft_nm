@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:47 by yforeau           #+#    #+#             */
-/*   Updated: 2023/03/31 11:24:19 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/04/01 21:10:00 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,14 @@ void	nm(t_nm_config *cfg, char *path)
 {
 	t_nm_file	file = { 0 };
 
-	if (get_binary_file(&file, path, cfg) || read_elf_header(&file, cfg))
-		//|| (!cfg->elf_mode && list_symbols(&file, cfg)))
+	if (get_binary_file(&file, path, cfg) || read_elf_header(&file, cfg)
+		|| (!cfg->elf_mode && list_symbols(&file, cfg)))
 	{
 		cfg->exit_status = EXIT_FAILURE;
 		if (file.data && munmap(file.data, file.size) < 0)
 			ft_exit(EXIT_FAILURE, "munmap: %s", strerror(errno));
 		return ;
 	}
-	//TODO: read the rest of the file and print symbols in the required order
 	if (cfg->elf_mode)
 	{
 		if (file.class == ELFCLASS32)
