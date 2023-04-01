@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 18:52:16 by yforeau           #+#    #+#             */
-/*   Updated: 2023/04/01 21:43:24 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/04/01 21:48:26 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int					list_symbols(t_nm_file *file, t_nm_config *cfg)
 	for (t_list *ptr = symbols; ptr; ptr = ptr->next)
 	{
 		t_nm_symbol	*symbol = ptr->content;
-		ft_printf("%#llx %c %s\n", symbol->value, symbol->type, symbol->name);
+		ft_printf("%016llx %c %s\n", symbol->value, symbol->type, symbol->name);
 	}
 	// CLEAN
 	ft_lstdel(&symbols, delete_symbol);
