@@ -43,7 +43,7 @@ static int			get_symbols64(t_list **dest, t_nm_file *file,
 	else if (!(strtab = get_section64(file, sh_strtab)))
 		return (1);
 	symbol_count = sh_symtab->sh_size / sizeof(Elf64_Sym);
-	for (size_t i = 0; i < symbol_count; ++i)
+	for (size_t i = 1; i < symbol_count; ++i)
 		if (!push_symbol64(dest, symtab + i, strtab, sh_strtab->sh_size))
 			return (1);
 	return (0);
