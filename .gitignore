@@ -1,3 +1,6 @@
 ft_nm
 obj/
 *.swp
+*.swo
+*.swn
+*.swp
