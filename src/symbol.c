@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 17:07:45 by yforeau           #+#    #+#             */
-/*   Updated: 2023/04/01 21:32:18 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/04/04 17:47:04 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,32 @@ void	delete_symbol(void *symbol, size_t size)
 
 char	symbol_type64(Elf64_Sym *elf_symbol, Elf64_Shdr *sections)
 {
-	char	type = '?';
+	char			type = '?';
+	unsigned char	bind = ELF64_ST_BIND(elf_symbol->st_info);
 
-	if (elf_symbol->st_shndx == SHN_UNDEF)
-		type = 'U';
+	if (bind == STB_WEAK && ELF64_ST_TYPE(elf_symbol->st_info))
+		type = elf_symbol->st_shndx == SHN_UNDEF ? 'v' : 'V';
+	else if (bind == STB_WEAK)
+		type = elf_symbol->st_shndx == SHN_UNDEF ? 'w' : 'W';
+	else if (elf_symbol->st_shndx == SHN_UNDEF)
+		type = bind == STB_LOCAL ? 'u' : 'U';
 	else if (elf_symbol->st_shndx == SHN_ABS)
-		type = 'A';
+		type = bind == STB_LOCAL ? 'a' : 'A';
 	else if (elf_symbol->st_shndx == SHN_COMMON)
-		type = 'C';
+		type = bind == STB_LOCAL ? 'c' : 'C';
 	else if (sections[elf_symbol->st_shndx].sh_type == SHT_NOBITS
 		&& sections[elf_symbol->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
-		type = 'B';
+		type = bind == STB_LOCAL ? 'b' : 'B';
 	else if (sections[elf_symbol->st_shndx].sh_type == SHT_PROGBITS
 		&& sections[elf_symbol->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
-		type = 'D';
+		type = bind == STB_LOCAL ? 'd' : 'D';
 	else if (sections[elf_symbol->st_shndx].sh_type == SHT_PROGBITS
 		&& sections[elf_symbol->st_shndx].sh_flags
 			== (SHF_ALLOC | SHF_EXECINSTR))
-		type = 'T';
+		type = bind == STB_LOCAL ? 't' : 'T';
 	else if (sections[elf_symbol->st_shndx].sh_type == SHT_PROGBITS
 		&& sections[elf_symbol->st_shndx].sh_flags == SHF_ALLOC)
-		type = 'R';
+		type = bind == STB_LOCAL ? 'r' : 'R';
 	return (type);
 }
 
