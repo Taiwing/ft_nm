@@ -62,6 +62,15 @@ typedef union	u_elf_hdr
 }				s_elf_hdr;
 
 /*
+** Unionize elf sections header pointers
+*/
+typedef union	u_elf_shdr
+{
+	Elf32_Shdr	*hdr32;
+	Elf64_Shdr	*hdr64;
+}				s_elf_shdr;
+
+/*
 ** ft_nm's file type
 */
 typedef struct	s_nm_file
@@ -70,6 +79,10 @@ typedef struct	s_nm_file
 	size_t		size;			// size of the file
 	int			class;			// ELFCLASS32 or ELFCLASS64
 	s_elf_hdr	elf;			// elf header loaded from file
+	s_elf_shdr	sections;		// section headers loaded from file
+	size_t		sections_count;	// count of section headers
+	char		*strtab;		// string table loaded from file
+	size_t		strtab_size;	// size of the string table
 }				t_nm_file;
 
 /*
@@ -93,7 +106,5 @@ int		list_symbols(t_nm_file *file, t_nm_config *cfg);
 int		list32(t_list **dest, t_nm_file *file);
 int		list64(t_list **dest, t_nm_file *file);
 void	delete_symbol(void *symbol, size_t size);
-t_list	*push_symbol32(t_list **dest, Elf32_Sym *elf_symbol,
-		char *strtab, size_t size);
-t_list	*push_symbol64(t_list **dest, Elf64_Sym *elf_symbol,
-		char *strtab, size_t size);
+t_list	*push_symbol32(t_list **dest, Elf32_Sym *elf_symbol, t_nm_file *file);
+t_list	*push_symbol64(t_list **dest, Elf64_Sym *elf_symbol, t_nm_file *file);
