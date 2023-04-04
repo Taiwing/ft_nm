@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 17:07:45 by yforeau           #+#    #+#             */
-/*   Updated: 2023/04/04 17:47:04 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/04/04 19:42:59 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,18 @@ char	symbol_type64(Elf64_Sym *elf_symbol, Elf64_Shdr *sections)
 	else if (sections[elf_symbol->st_shndx].sh_type == SHT_NOBITS
 		&& sections[elf_symbol->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
 		type = bind == STB_LOCAL ? 'b' : 'B';
-	else if (sections[elf_symbol->st_shndx].sh_type == SHT_PROGBITS
-		&& sections[elf_symbol->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
+	else if (sections[elf_symbol->st_shndx].sh_type == SHT_DYNAMIC ||
+		(sections[elf_symbol->st_shndx].sh_type == SHT_PROGBITS
+		&& sections[elf_symbol->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE)))
 		type = bind == STB_LOCAL ? 'd' : 'D';
+	else if (sections[elf_symbol->st_shndx].sh_type == SHT_PREINIT_ARRAY)
+		type = 'D';
 	else if (sections[elf_symbol->st_shndx].sh_type == SHT_PROGBITS
 		&& sections[elf_symbol->st_shndx].sh_flags
 			== (SHF_ALLOC | SHF_EXECINSTR))
 		type = bind == STB_LOCAL ? 't' : 'T';
-	else if (sections[elf_symbol->st_shndx].sh_type == SHT_PROGBITS
-		&& sections[elf_symbol->st_shndx].sh_flags == SHF_ALLOC)
+	else if (sections[elf_symbol->st_shndx].sh_type & SHT_PROGBITS
+		&& !(sections[elf_symbol->st_shndx].sh_flags & SHF_WRITE))
 		type = bind == STB_LOCAL ? 'r' : 'R';
 	return (type);
 }
