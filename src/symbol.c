@@ -59,8 +59,20 @@ t_list	*push_symbol32(t_list **dest, Elf32_Sym *elf_symbol, t_nm_file *file)
 
 	if (elf_symbol->st_name >= file->strtab_size)
 		return (NULL);
-	symbol.name = file->strtab + elf_symbol->st_name;
-	symbol.type = 'U'; //TODO: find appropriate letter
+	if (ELF32_ST_TYPE(elf_symbol->st_info) == STT_SECTION)
+	{
+		if (elf_symbol->st_shndx >= file->sections_count)
+			return (NULL);
+		else if (file->sections.hdr32[elf_symbol->st_shndx].sh_name
+			>= file->shstrtab_size)
+			return (NULL);
+		symbol.name = file->shstrtab
+			+ file->sections.hdr32[elf_symbol->st_shndx].sh_name;
+	}
+	else
+		symbol.name = file->strtab + elf_symbol->st_name;
+	//symbol.type = symbol_type32(elf_symbol, file->sections.hdr32);
+	symbol.type = 'U'; //TEMP
 	symbol.value = elf_symbol->st_value;
 	return (ft_lst_push_back(dest, &symbol, sizeof(symbol)));
 }
@@ -71,7 +83,18 @@ t_list	*push_symbol64(t_list **dest, Elf64_Sym *elf_symbol, t_nm_file *file)
 
 	if (elf_symbol->st_name >= file->strtab_size)
 		return (NULL);
-	symbol.name = file->strtab + elf_symbol->st_name;
+	if (ELF64_ST_TYPE(elf_symbol->st_info) == STT_SECTION)
+	{
+		if (elf_symbol->st_shndx >= file->sections_count)
+			return (NULL);
+		else if (file->sections.hdr64[elf_symbol->st_shndx].sh_name
+			>= file->shstrtab_size)
+			return (NULL);
+		symbol.name = file->shstrtab
+			+ file->sections.hdr64[elf_symbol->st_shndx].sh_name;
+	}
+	else
+		symbol.name = file->strtab + elf_symbol->st_name;
 	symbol.type = symbol_type64(elf_symbol, file->sections.hdr64);
 	symbol.value = elf_symbol->st_value;
 	return (ft_lst_push_back(dest, &symbol, sizeof(symbol)));

@@ -83,6 +83,8 @@ typedef struct	s_nm_file
 	size_t		sections_count;	// count of section headers
 	char		*strtab;		// string table loaded from file
 	size_t		strtab_size;	// size of the string table
+	char		*shstrtab;		// section string table loaded from file
+	size_t		shstrtab_size;	// size of the section string table
 }				t_nm_file;
 
 /*

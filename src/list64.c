@@ -52,22 +52,22 @@ static int			get_symbols64(t_list **dest, t_nm_file *file,
 int				list64(t_list **dest, t_nm_file *file)
 {
 	Elf64_Shdr	*sh_shstrtab, *sh_symtab, *sh_strtab;
-	char		*shstrtab;
 	int			skip = 0;
 
 	file->sections = (s_elf_shdr)(Elf64_Shdr *)(((uint8_t *)file->data)
 		+ file->elf.hdr64.e_shoff);
 	file->sections_count = file->elf.hdr64.e_shnum;
 	sh_shstrtab = file->sections.hdr64 + file->elf.hdr64.e_shstrndx;
-	if (!(shstrtab = get_section64(file, sh_shstrtab)))
+	if (!(file->shstrtab = get_section64(file, sh_shstrtab)))
 		return (1);
 	else if (!(sh_symtab = get_section_header64(file, SHT_SYMTAB, 0)))
 		return (1);
+	file->shstrtab_size = sh_shstrtab->sh_size;
 	while ((sh_strtab = get_section_header64(file, SHT_STRTAB, skip)))
 	{
-		if (sh_strtab->sh_name >= sh_shstrtab->sh_size)
+		if (sh_strtab->sh_name >= file->shstrtab_size)
 			return (1);
-		if (ft_strcmp(shstrtab + sh_strtab->sh_name, ".strtab"))
+		if (ft_strcmp(file->shstrtab + sh_strtab->sh_name, ".strtab"))
 			++skip;
 		else
 			break;
