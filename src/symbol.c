@@ -24,7 +24,7 @@ char	symbol_type64(Elf64_Sym *elf_symbol, Elf64_Shdr *sections)
 	char			type = '?';
 	unsigned char	bind = ELF64_ST_BIND(elf_symbol->st_info);
 
-	if (bind == STB_WEAK && ELF64_ST_TYPE(elf_symbol->st_info))
+	if (bind == STB_WEAK && ELF64_ST_TYPE(elf_symbol->st_info) == STT_OBJECT)
 		type = elf_symbol->st_shndx == SHN_UNDEF ? 'v' : 'V';
 	else if (bind == STB_WEAK)
 		type = elf_symbol->st_shndx == SHN_UNDEF ? 'w' : 'W';

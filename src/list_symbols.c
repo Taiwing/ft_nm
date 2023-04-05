@@ -21,6 +21,8 @@ static int			list(t_list **dest, t_nm_file *file)
 	return (1);
 }
 
+#define NM_UNDEFINED_TYPES "Uuvw"
+
 int					list_symbols(t_nm_file *file, t_nm_config *cfg)
 {
 	t_list	*symbols = NULL;
@@ -37,7 +39,10 @@ int					list_symbols(t_nm_file *file, t_nm_config *cfg)
 	for (t_list *ptr = symbols; ptr; ptr = ptr->next)
 	{
 		t_nm_symbol	*symbol = ptr->content;
-		ft_printf("%016llx %c %s\n", symbol->value, symbol->type, symbol->name);
+		if (ft_strchr(NM_UNDEFINED_TYPES, symbol->type))
+			ft_printf("%16c %c %s\n", ' ', symbol->type, symbol->name);
+		else
+			ft_printf("%016llx %c %s\n", symbol->value, symbol->type, symbol->name);
 	}
 	// CLEAN
 	ft_lstdel(&symbols, delete_symbol);
