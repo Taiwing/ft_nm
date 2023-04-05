@@ -12,6 +12,13 @@
 
 #include "ft_nm.h"
 
+static void			delete_symbol(void *symbol, size_t size)
+{
+	(void)size;
+
+	ft_memdel(&symbol);
+}
+
 static int			list(t_list **dest, t_nm_file *file)
 {
 	if (file->class == ELFCLASS32)

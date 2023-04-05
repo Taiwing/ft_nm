@@ -13,13 +13,14 @@ NAME		=	ft_nm
 ############################## SOURCES #########################################
 
 SRCC			=	main.c\
-					list64.c\
 					elf.c\
-					list_symbols.c\
 					strings.c\
-					options.c\
+					list64.c\
 					list32.c\
-					symbol.c\
+					symbol64.c\
+					options.c\
+					list_symbols.c\
+					symbol32.c\
 
 ODIR			=	obj
 OBJ				=	$(patsubst %.c,%.o,$(SRCC))
@@ -40,13 +41,14 @@ $(SUB1D)/libft.a:
 	make -C $(SUB1D)
 
 main.o: ft_nm.h libft.h
-list64.o: ft_nm.h libft.h
 elf.o: ft_nm.h libft.h
-list_symbols.o: ft_nm.h libft.h
 strings.o: ft_nm.h libft.h
-options.o: ft_nm.h libft.h
+list64.o: ft_nm.h libft.h
 list32.o: ft_nm.h libft.h
-symbol.o: ft_nm.h libft.h
+symbol64.o: ft_nm.h libft.h
+options.o: ft_nm.h libft.h
+list_symbols.o: ft_nm.h libft.h
+symbol32.o: ft_nm.h libft.h
 %.o: %.c
 	@mkdir -p $(ODIR)
 	$(CC) -c $(CFLAGS) $< $(HFLAGS) -o $(ODIR)/$@
