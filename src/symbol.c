@@ -38,7 +38,9 @@ char	symbol_type64(Elf64_Sym *elf_symbol, Elf64_Shdr *sections)
 		&& sections[elf_symbol->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
 		type = bind == STB_LOCAL ? 'b' : 'B';
 	else if (sections[elf_symbol->st_shndx].sh_type == SHT_DYNAMIC ||
-		(sections[elf_symbol->st_shndx].sh_type == SHT_PROGBITS
+		((sections[elf_symbol->st_shndx].sh_type == SHT_PROGBITS
+		|| sections[elf_symbol->st_shndx].sh_type == SHT_INIT_ARRAY
+		|| sections[elf_symbol->st_shndx].sh_type == SHT_FINI_ARRAY)
 		&& sections[elf_symbol->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE)))
 		type = bind == STB_LOCAL ? 'd' : 'D';
 	else if (sections[elf_symbol->st_shndx].sh_type == SHT_PREINIT_ARRAY)
@@ -47,8 +49,11 @@ char	symbol_type64(Elf64_Sym *elf_symbol, Elf64_Shdr *sections)
 		&& sections[elf_symbol->st_shndx].sh_flags
 			== (SHF_ALLOC | SHF_EXECINSTR))
 		type = bind == STB_LOCAL ? 't' : 'T';
-	else if (sections[elf_symbol->st_shndx].sh_type & SHT_PROGBITS
-		&& !(sections[elf_symbol->st_shndx].sh_flags & SHF_WRITE))
+	else if (ELF64_ST_TYPE(elf_symbol->st_info) == STT_SECTION
+		&& sections[elf_symbol->st_shndx].sh_type == SHT_PROGBITS
+		&& sections[elf_symbol->st_shndx].sh_flags == (SHF_MERGE | SHF_STRINGS))
+		type = bind == STB_LOCAL ? 'n' : 'N';
+	else if (!(sections[elf_symbol->st_shndx].sh_flags & SHF_WRITE))
 		type = bind == STB_LOCAL ? 'r' : 'R';
 	return (type);
 }
