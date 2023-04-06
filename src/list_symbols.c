@@ -28,6 +28,26 @@ static int			list(t_list **dest, t_nm_file *file)
 	return (1);
 }
 
+static int			sort_symbols_default(void *a, void *b)
+{
+	return (strcoll(((t_nm_symbol *)a)->name, ((t_nm_symbol *)b)->name));
+}
+
+static int			sort_symbols_reverse(void *a, void *b)
+{
+	return (strcoll(((t_nm_symbol *)b)->name, ((t_nm_symbol *)a)->name));
+}
+
+static void			sort(t_list *symbols, t_nm_config *cfg)
+{
+	if (cfg->sort == E_SORT_NONE)
+		return;
+	if (cfg->sort == E_SORT_DEFAULT)
+		ft_lst_quicksort(symbols, ft_lst_size(symbols), sort_symbols_default);
+	if (cfg->sort == E_SORT_REVERSE)
+		ft_lst_quicksort(symbols, ft_lst_size(symbols), sort_symbols_reverse);
+}
+
 #define NM_UNDEFINED_TYPES	"Uuvw"
 #define NM_VALUE_PADDING_32	8
 #define NM_VALUE_PADDING_64	16
@@ -59,7 +79,9 @@ int					list_symbols(t_nm_file *file, t_nm_config *cfg)
 		ft_lstdel(&symbols, delete_symbol);
 		return (1);
 	}
+	// FILTER
 	// SORT (with strcoll)
+	sort(symbols, cfg);
 	// PRINT
 	print(symbols, file);
 	// CLEAN

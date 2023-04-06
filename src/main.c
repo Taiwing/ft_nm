@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <locale.h>
 #include "ft_nm.h"
 
 static int		get_binary_file(t_nm_file *dest, char *path, t_nm_config *cfg)
@@ -71,6 +72,7 @@ int		main(int argc, char **argv)
 
 	ft_exitmsg((char *)cfg.exec);
 	args = parse_arguments(&cfg, argc, argv);
+	setlocale(LC_COLLATE, "");
 	if (!args[0] || !args[1])
 		nm(&cfg, args[0] ? args[0] : "a.out");
 	else
