@@ -6,6 +6,8 @@ int	filter_debug_out(void *ref, t_nm_symbol *symbol)
 {
 	(void)ref;
 
+	if (symbol->name[0] == '.')
+		return (0);
 	return (!ft_strchr(NM_DEBUG_TYPES, symbol->type));
 }
 
