@@ -34,7 +34,8 @@ static char	symbol_type32(Elf32_Sym *elf_symbol, Elf32_Shdr *sections)
 		((sections[elf_symbol->st_shndx].sh_type == SHT_PROGBITS
 		|| sections[elf_symbol->st_shndx].sh_type == SHT_INIT_ARRAY
 		|| sections[elf_symbol->st_shndx].sh_type == SHT_FINI_ARRAY)
-		&& sections[elf_symbol->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE)))
+		&& (sections[elf_symbol->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE)
+		|| sections[elf_symbol->st_shndx].sh_flags == 1027)))
 		type = bind == STB_LOCAL ? 'd' : 'D';
 	else if (sections[elf_symbol->st_shndx].sh_type == SHT_PREINIT_ARRAY)
 		type = 'D';
