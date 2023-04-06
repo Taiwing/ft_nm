@@ -71,7 +71,8 @@ static char	*symbol_name32(Elf32_Sym *elf_symbol, t_nm_file *file)
 	}
 }
 
-t_list	*push_symbol32(t_list **dest, Elf32_Sym *elf_symbol, t_nm_file *file)
+t_list	*push_symbol32(t_list **dest, Elf32_Sym *elf_symbol,
+	t_nm_file *file, int idx)
 {
 	t_nm_symbol	symbol = { 0 };
 
@@ -81,5 +82,6 @@ t_list	*push_symbol32(t_list **dest, Elf32_Sym *elf_symbol, t_nm_file *file)
 		return (NULL);
 	symbol.type = symbol_type32(elf_symbol, file->sections.hdr32);
 	symbol.value = elf_symbol->st_value;
+	symbol.idx = idx;
 	return (ft_lst_push_back(dest, &symbol, sizeof(symbol)));
 }

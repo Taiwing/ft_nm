@@ -44,7 +44,7 @@ static int			get_symbols32(t_list **dest, t_nm_file *file,
 	file->strtab_size = sh_strtab->sh_size;
 	symbol_count = sh_symtab->sh_size / sizeof(Elf32_Sym);
 	for (size_t i = 1; i < symbol_count; ++i)
-		if (!push_symbol32(dest, symtab + i, file))
+		if (!push_symbol32(dest, symtab + i, file, i))
 			return (1);
 	return (0);
 }

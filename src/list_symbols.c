@@ -30,12 +30,18 @@ static int			list(t_list **dest, t_nm_file *file)
 
 static int			sort_symbols_default(void *a, void *b)
 {
-	return (strcoll(((t_nm_symbol *)a)->name, ((t_nm_symbol *)b)->name));
+	t_nm_symbol	*sym_a = a, *sym_b = b;
+	int			cmp = strcoll(sym_a->name, sym_b->name);
+
+	return (cmp ? cmp : sym_a->idx - sym_b->idx);
 }
 
 static int			sort_symbols_reverse(void *a, void *b)
 {
-	return (strcoll(((t_nm_symbol *)b)->name, ((t_nm_symbol *)a)->name));
+	t_nm_symbol	*sym_a = a, *sym_b = b;
+	int			cmp = strcoll(sym_b->name, sym_a->name);
+
+	return (cmp ? cmp : sym_a->idx - sym_b->idx);
 }
 
 static void			sort(t_list *symbols, t_nm_config *cfg)

@@ -95,6 +95,7 @@ typedef struct	s_nm_symbol
 	char		*name;			// symbol name string
 	char		type;			// nm type letter
 	uint64_t	value;			// symbol value
+	int			idx;			// symbol index
 }				t_nm_symbol;
 
 /*
@@ -107,5 +108,7 @@ void	print_elf64_header(Elf64_Ehdr *hdr);
 int		list_symbols(t_nm_file *file, t_nm_config *cfg);
 int		list32(t_list **dest, t_nm_file *file);
 int		list64(t_list **dest, t_nm_file *file);
-t_list	*push_symbol32(t_list **dest, Elf32_Sym *elf_symbol, t_nm_file *file);
-t_list	*push_symbol64(t_list **dest, Elf64_Sym *elf_symbol, t_nm_file *file);
+t_list	*push_symbol32(t_list **dest, Elf32_Sym *elf_symbol,
+	t_nm_file *file, int idx);
+t_list	*push_symbol64(t_list **dest, Elf64_Sym *elf_symbol,
+	t_nm_file *file, int idx);
