@@ -16,8 +16,10 @@ SRCC			=	main.c\
 					elf.c\
 					strings.c\
 					list64.c\
+					filter.c\
 					list32.c\
 					symbol64.c\
+					sort.c\
 					options.c\
 					list_symbols.c\
 					symbol32.c\
@@ -44,8 +46,10 @@ main.o: ft_nm.h libft.h
 elf.o: ft_nm.h libft.h
 strings.o: ft_nm.h libft.h
 list64.o: ft_nm.h libft.h
+filter.o: ft_nm.h libft.h
 list32.o: ft_nm.h libft.h
 symbol64.o: ft_nm.h libft.h
+sort.o: ft_nm.h libft.h
 options.o: ft_nm.h libft.h
 list_symbols.o: ft_nm.h libft.h
 symbol32.o: ft_nm.h libft.h
