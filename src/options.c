@@ -80,7 +80,6 @@ char			**parse_arguments(t_nm_config *cfg, int argc, char **argv)
 			case 'u': cfg->filter |= FILTER_UNDEFINED;					break;
 			case 'r': cfg->sort = E_SORT_REVERSE;						break;
 			case 'p': cfg->sort = E_SORT_NONE;							break;
-			//TODO: parse other options
 			default: usage(cfg->exec, opt != 'h');						break;
 		}
 	return (argv + optd.optind);

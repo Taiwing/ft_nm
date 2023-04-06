@@ -115,19 +115,14 @@ int					list_symbols(t_nm_file *file, t_nm_config *cfg)
 	t_list	*symbols = NULL;
 
 	(void)cfg;
-	// LIST
 	if (list(&symbols, file) || !symbols)
 	{
 		ft_lstdel(&symbols, delete_symbol);
 		return (1);
 	}
-	// FILTER
 	filter_symbols(&symbols, cfg);
-	// SORT (with strcoll)
 	sort(symbols, cfg);
-	// PRINT
 	print(symbols, file);
-	// CLEAN
 	ft_lstdel(&symbols, delete_symbol);
 	return (0);
 }
