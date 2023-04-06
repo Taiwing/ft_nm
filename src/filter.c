@@ -13,6 +13,8 @@ int	filter_extern_only(void *ref, t_nm_symbol *symbol)
 {
 	(void)ref;
 
+	if (symbol->type == 'N')
+		return (0);
 	return ((symbol->type >= 'A' && symbol->type <= 'Z')
 		|| ft_strchr("vw", symbol->type));
 }
