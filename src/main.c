@@ -67,6 +67,7 @@ int		main(int argc, char **argv)
 	t_nm_config	cfg = {
 		.exec = ft_exec_name(*argv),
 		.sort = E_SORT_DEFAULT,
+		.filter = FILTER_DEBUG,
 		.exit_status = EXIT_SUCCESS,
 	};
 

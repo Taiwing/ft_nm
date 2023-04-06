@@ -75,6 +75,9 @@ char			**parse_arguments(t_nm_config *cfg, int argc, char **argv)
 		switch (opt)
 		{
 			case 'e': cfg->elf_mode = 1;								break;
+			case 'a': cfg->filter ^= FILTER_DEBUG;						break;
+			case 'g': cfg->filter |= FILTER_EXTERN;						break;
+			case 'u': cfg->filter |= FILTER_UNDEFINED;					break;
 			case 'r': cfg->sort = E_SORT_REVERSE;						break;
 			case 'p': cfg->sort = E_SORT_NONE;							break;
 			//TODO: parse other options

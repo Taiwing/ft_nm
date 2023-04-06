@@ -38,6 +38,11 @@ extern const char		*g_nm_machine[];
 
 #define EM_MACHINE_MAX	EM_CSKY
 
+// symbol filters
+#define FILTER_DEBUG		(1 << 0)
+#define FILTER_EXTERN		(1 << 1)
+#define FILTER_UNDEFINED	(1 << 2)
+
 // symbol sorts
 enum e_nm_sorts { E_SORT_NONE = 0, E_SORT_DEFAULT, E_SORT_REVERSE };
 
@@ -49,6 +54,7 @@ typedef struct		s_nm_config
 	const char		*exec;			// executable name
 	int				elf_mode;		// boolean set to 1 if e option is passed
 	enum e_nm_sorts	sort;			// symbol sort
+	unsigned int	filter;			// symbol filter
 	int				exit_status;	// value to exit on (success or failure)
 }					t_nm_config;
 
