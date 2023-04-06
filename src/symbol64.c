@@ -28,7 +28,7 @@ static char	symbol_type64(Elf64_Sym *elf_symbol, Elf64_Shdr *sections)
 	else if (elf_symbol->st_shndx == SHN_COMMON)
 		type = bind == STB_LOCAL ? 'c' : 'C';
 	else if (sections[elf_symbol->st_shndx].sh_type == SHT_NOBITS
-		&& sections[elf_symbol->st_shndx].sh_flags == (SHF_ALLOC | SHF_WRITE))
+		&& (sections[elf_symbol->st_shndx].sh_flags & (SHF_ALLOC | SHF_WRITE)))
 		type = bind == STB_LOCAL ? 'b' : 'B';
 	else if (sections[elf_symbol->st_shndx].sh_type == SHT_DYNAMIC ||
 		((sections[elf_symbol->st_shndx].sh_type == SHT_PROGBITS
