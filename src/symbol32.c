@@ -46,6 +46,12 @@ static char	symbol_type32(Elf32_Sym *elf_symbol, Elf32_Shdr *sections)
 		&& sections[elf_symbol->st_shndx].sh_type == SHT_PROGBITS
 		&& sections[elf_symbol->st_shndx].sh_flags == (SHF_MERGE | SHF_STRINGS))
 		type = bind == STB_LOCAL ? 'n' : 'N';
+	else if (ELF32_ST_TYPE(elf_symbol->st_info) == STT_SECTION
+		&& sections[elf_symbol->st_shndx].sh_type == SHT_PROGBITS
+		&& (!sections[elf_symbol->st_shndx].sh_flags
+		|| sections[elf_symbol->st_shndx].sh_flags == 2048
+		|| sections[elf_symbol->st_shndx].sh_flags == 2096))
+		type = 'N';
 	else if (!(sections[elf_symbol->st_shndx].sh_flags & SHF_WRITE))
 		type = bind == STB_LOCAL ? 'r' : 'R';
 	return (type);
