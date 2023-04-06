@@ -55,8 +55,8 @@ static char	symbol_type64(Elf64_Sym *elf_symbol, Elf64_Shdr *sections)
 	else if (st_type == STT_SECTION && sh_type == SHT_PROGBITS
 		&& sh_flags == (SHF_MERGE | SHF_STRINGS))
 		type = st_bind == STB_LOCAL ? 'n' : 'N';
-	else if (st_type == STT_SECTION && sh_type == SHT_PROGBITS && (!sh_flags
-		|| sh_flags == 2048 || sh_flags == 2096))
+	else if (st_type == STT_SECTION && sh_type == SHT_PROGBITS
+		&& (!sh_flags || sh_flags == 2048 || sh_flags == 2096))
 		type = 'N';
 	else if (!(sh_flags & SHF_WRITE))
 		type = st_bind == STB_LOCAL ? 'r' : 'R';
