@@ -48,10 +48,6 @@ static void			sort(t_list *symbols, t_nm_config *cfg)
 		ft_lst_quicksort(symbols, ft_lst_size(symbols), sort_symbols_reverse);
 }
 
-#define NM_UNDEFINED_TYPES	"Uuvw"
-#define NM_VALUE_PADDING_32	8
-#define NM_VALUE_PADDING_64	16
-
 static void			print(t_list *symbols, t_nm_file *file)
 {
 	for (t_list *ptr = symbols; ptr; ptr = ptr->next)

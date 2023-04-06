@@ -43,6 +43,14 @@ extern const char		*g_nm_machine[];
 #define FILTER_EXTERN		(1 << 1)
 #define FILTER_UNDEFINED	(1 << 2)
 
+// symbol type characters
+#define NM_DEBUG_TYPES		"aAnN"
+#define NM_UNDEFINED_TYPES	"Uuvw"
+
+// symbol value padding
+#define NM_VALUE_PADDING_32	8
+#define NM_VALUE_PADDING_64	16
+
 // symbol sorts
 enum e_nm_sorts { E_SORT_NONE = 0, E_SORT_DEFAULT, E_SORT_REVERSE };
 
