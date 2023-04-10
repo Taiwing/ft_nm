@@ -3,6 +3,11 @@
 Implementation of the nm command in C. This program reads ELF binaries and lists
 the symbols they contain.
 
+<br />
+<p align="center">
+	<img src="https://github.com/Taiwing/ft_nm/blob/master/resources/pixel_art_elf_hacker.png?raw=true" alt="hacker elf" style="width: 50%;" />
+</p>
+
 ## Setup
 
 ```shell
