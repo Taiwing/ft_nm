@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:42 by yforeau           #+#    #+#             */
-/*   Updated: 2023/04/01 19:32:41 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/04/10 20:01:10 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,8 @@ int		filter_undefined_only(void *ref, t_nm_symbol *symbol);
 int		sort_symbols_default(void *a, void *b);
 int		sort_symbols_reverse(void *a, void *b);
 int		list_symbols(t_nm_file *file, t_nm_config *cfg);
-int		list32(t_list **dest, t_nm_file *file);
-int		list64(t_list **dest, t_nm_file *file);
+int		list32(t_list **dest, t_nm_file *file, t_nm_config *cfg);
+int		list64(t_list **dest, t_nm_file *file, t_nm_config *cfg);
 t_list	*push_symbol32(t_list **dest, Elf32_Sym *elf_symbol,
 	t_nm_file *file, int idx);
 t_list	*push_symbol64(t_list **dest, Elf64_Sym *elf_symbol,

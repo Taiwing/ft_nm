@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 18:52:16 by yforeau           #+#    #+#             */
-/*   Updated: 2023/04/01 21:52:29 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/04/10 20:01:00 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@ static void			delete_symbol(void *symbol, size_t size)
 	ft_memdel(&symbol);
 }
 
-static int			list(t_list **dest, t_nm_file *file)
+static int			list(t_list **dest, t_nm_file *file, t_nm_config *cfg)
 {
 	if (file->class == ELFCLASS32)
-		return (list32(dest, file));
-	else if (file->class == ELFCLASS64)
-		return (list64(dest, file));
-	return (1);
+		return (list32(dest, file, cfg));
+	else
+		return (list64(dest, file, cfg));
 }
 
 static void			filter(t_list **symbols, t_nm_config *cfg)
@@ -69,7 +68,7 @@ int					list_symbols(t_nm_file *file, t_nm_config *cfg)
 	t_list	*symbols = NULL;
 
 	(void)cfg;
-	if (list(&symbols, file) || !symbols)
+	if (list(&symbols, file, cfg) || !symbols)
 	{
 		ft_lstdel(&symbols, delete_symbol);
 		return (1);

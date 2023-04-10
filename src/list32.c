@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 21:44:48 by yforeau           #+#    #+#             */
-/*   Updated: 2023/04/01 21:45:16 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/04/10 20:00:48 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,30 +49,34 @@ static int			get_symbols32(t_list **dest, t_nm_file *file,
 	return (0);
 }
 
-int				list32(t_list **dest, t_nm_file *file)
+int				list32(t_list **dest, t_nm_file *file, t_nm_config *cfg)
 {
 	Elf32_Shdr	*sh_shstrtab, *sh_symtab, *sh_strtab;
-	char		*shstrtab;
 	int			skip = 0;
 
 	file->sections = (s_elf_shdr)(Elf32_Shdr *)(((uint8_t *)file->data)
 		+ file->elf.hdr32.e_shoff);
 	file->sections_count = file->elf.hdr32.e_shnum;
 	sh_shstrtab = file->sections.hdr32 + file->elf.hdr32.e_shstrndx;
-	if (!(shstrtab = get_section32(file, sh_shstrtab)))
-		return (1);
+	if (!(file->shstrtab = get_section32(file, sh_shstrtab)))
+		return (ft_dprintf(2, "%s: shstrtab section missing\n", cfg->exec));
 	else if (!(sh_symtab = get_section_header32(file, SHT_SYMTAB, 0)))
-		return (1);
+		return (ft_dprintf(2, "%s: symtab section header missing\n",
+			cfg->exec));
+	file->shstrtab_size = sh_shstrtab->sh_size;
 	while ((sh_strtab = get_section_header32(file, SHT_STRTAB, skip)))
 	{
-		if (sh_strtab->sh_name >= sh_shstrtab->sh_size)
-			return (1);
-		if (ft_strcmp(shstrtab + sh_strtab->sh_name, ".strtab"))
+		if (sh_strtab->sh_name >= file->shstrtab_size)
+			return (ft_dprintf(2, "%s: section name index is out of bound\n",
+				cfg->exec));
+		//TODO: check if string is null-terminated
+		if (ft_strcmp(file->shstrtab + sh_strtab->sh_name, ".strtab"))
 			++skip;
 		else
 			break;
 	}
 	if (!sh_strtab)
-		return (1);
+		return (ft_dprintf(2, "%s: strtab section header missing\n",
+			cfg->exec));
 	return (get_symbols32(dest, file, sh_symtab, sh_strtab));
 }

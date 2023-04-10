@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 19:25:09 by yforeau           #+#    #+#             */
-/*   Updated: 2023/04/01 21:43:30 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/04/10 19:52:40 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int			get_symbols64(t_list **dest, t_nm_file *file,
 	return (0);
 }
 
-int				list64(t_list **dest, t_nm_file *file)
+int				list64(t_list **dest, t_nm_file *file, t_nm_config *cfg)
 {
 	Elf64_Shdr	*sh_shstrtab, *sh_symtab, *sh_strtab;
 	int			skip = 0;
@@ -59,20 +59,24 @@ int				list64(t_list **dest, t_nm_file *file)
 	file->sections_count = file->elf.hdr64.e_shnum;
 	sh_shstrtab = file->sections.hdr64 + file->elf.hdr64.e_shstrndx;
 	if (!(file->shstrtab = get_section64(file, sh_shstrtab)))
-		return (1);
+		return (ft_dprintf(2, "%s: shstrtab section missing\n", cfg->exec));
 	else if (!(sh_symtab = get_section_header64(file, SHT_SYMTAB, 0)))
-		return (1);
+		return (ft_dprintf(2, "%s: symtab section header missing\n",
+			cfg->exec));
 	file->shstrtab_size = sh_shstrtab->sh_size;
 	while ((sh_strtab = get_section_header64(file, SHT_STRTAB, skip)))
 	{
 		if (sh_strtab->sh_name >= file->shstrtab_size)
-			return (1);
+			return (ft_dprintf(2, "%s: section name index is out of bound\n",
+				cfg->exec));
+		//TODO: check if string is null-terminated
 		if (ft_strcmp(file->shstrtab + sh_strtab->sh_name, ".strtab"))
 			++skip;
 		else
 			break;
 	}
 	if (!sh_strtab)
-		return (1);
+		return (ft_dprintf(2, "%s: strtab section header missing\n",
+			cfg->exec));
 	return (get_symbols64(dest, file, sh_symtab, sh_strtab));
 }
