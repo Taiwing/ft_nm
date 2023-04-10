@@ -62,7 +62,7 @@ int	main(void) {
 }
 ```
 
-Compile this binary with and list its symbols with ft\_nm:
+Compile this program and list its symbols:
 
 ```shell
 gcc simple.c
