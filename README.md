@@ -21,6 +21,10 @@ does this by reading the *.symtab* section of the binaries. A symbol can be a
 variable, a function or some arbitrary debugging information (like file names
 for example).
 
+It works by parsing the ELF header and looking for the *.symtab* and its
+associated *.strtab*. The *.symtab* section is an array of every symbol defined
+in the binary and the *.strtab* is where their names are stored.
+
 ### Types
 
 Each symbol is associated a letter for its type. A lowercase letter represents a
