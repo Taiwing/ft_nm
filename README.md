@@ -21,14 +21,12 @@ cd ft_nm/ && make
 
 ## Description
 
-ft\_nm lists the symbols of every objfile it is provided (a.out by default). It
-does this by reading the *.symtab* section of the binaries. A symbol can be a
-variable, a function or some arbitrary debugging information (like file names
-for example).
-
-It works by parsing the ELF header and looking for the *.symtab* and its
-associated *.strtab*. The *.symtab* section is an array of every symbol defined
-in the binary and the *.strtab* is where their names are stored.
+ft\_nm lists the symbols of every objfile it is provided (a.out by default). A
+symbol can be a variable, a function or some arbitrary debugging information
+(like file names for example). It works by parsing the ELF header and looking
+for the *.symtab* section and its associated *.strtab*. The *.symtab* is an
+array of every symbol in the binary and the *.strtab* is where their names are
+stored.
 
 ### Types
 
