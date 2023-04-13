@@ -84,6 +84,9 @@ static char	*symbol_name64(Elf64_Sym *elf_symbol, t_nm_file *file)
 	{
 		if (elf_symbol->st_name >= file->strtab_size)
 			return (NULL);
+		else if (!is_null_terminated(file->strtab + elf_symbol->st_name,
+			file->strtab_size - elf_symbol->st_name))
+			return (NULL);
 		return (file->strtab + elf_symbol->st_name);
 	}
 }
