@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:42 by yforeau           #+#    #+#             */
-/*   Updated: 2023/04/10 20:01:10 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/04/13 18:42:44 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,3 +131,4 @@ t_list	*push_symbol32(t_list **dest, Elf32_Sym *elf_symbol,
 	t_nm_file *file, int idx);
 t_list	*push_symbol64(t_list **dest, Elf64_Sym *elf_symbol,
 	t_nm_file *file, int idx);
+int		is_null_terminated(char *string, size_t size_max);

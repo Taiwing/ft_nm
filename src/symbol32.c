@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 17:07:45 by yforeau           #+#    #+#             */
-/*   Updated: 2023/04/04 19:42:59 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/04/13 18:48:55 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ static char	*symbol_name32(Elf32_Sym *elf_symbol, t_nm_file *file)
 			return (NULL);
 		else if (file->sections.hdr32[elf_symbol->st_shndx].sh_name
 			>= file->shstrtab_size)
+			return (NULL);
+		else if (!is_null_terminated(file->shstrtab
+			+ file->sections.hdr32[elf_symbol->st_shndx].sh_name,
+			file->shstrtab_size
+			- file->sections.hdr32[elf_symbol->st_shndx].sh_name))
 			return (NULL);
 		return (file->shstrtab
 			+ file->sections.hdr32[elf_symbol->st_shndx].sh_name);

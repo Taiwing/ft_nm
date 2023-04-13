@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 19:25:09 by yforeau           #+#    #+#             */
-/*   Updated: 2023/04/10 19:52:40 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/04/13 18:47:10 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ int				list64(t_list **dest, t_nm_file *file, t_nm_config *cfg)
 		if (sh_strtab->sh_name >= file->shstrtab_size)
 			return (ft_dprintf(2, "%s: section name index is out of bound\n",
 				cfg->exec));
-		//TODO: check if string is null-terminated
+		else if (!is_null_terminated(file->shstrtab + sh_strtab->sh_name,
+			file->shstrtab_size - sh_strtab->sh_name))
+			return (ft_dprintf(2, "%s: section name is not null terminated\n",
+				cfg->exec));
 		if (ft_strcmp(file->shstrtab + sh_strtab->sh_name, ".strtab"))
 			++skip;
 		else

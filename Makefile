@@ -12,17 +12,18 @@ NAME		=	ft_nm
 
 ############################## SOURCES #########################################
 
-SRCC			=	main.c\
-					elf.c\
-					strings.c\
+SRCC			=	filter.c\
+					main.c\
 					list64.c\
-					filter.c\
+					elf.c\
+					list_symbols.c\
+					sort.c\
+					symbol32.c\
+					utils.c\
+					strings.c\
+					options.c\
 					list32.c\
 					symbol64.c\
-					sort.c\
-					options.c\
-					list_symbols.c\
-					symbol32.c\
 
 ODIR			=	obj
 OBJ				=	$(patsubst %.c,%.o,$(SRCC))
@@ -42,17 +43,18 @@ $(NAME): $(SUB1D)/libft.a $(ODIR) $(OBJ)
 $(SUB1D)/libft.a:
 	make -C $(SUB1D)
 
-main.o: ft_nm.h libft.h
-elf.o: ft_nm.h libft.h
-strings.o: ft_nm.h libft.h
-list64.o: ft_nm.h libft.h
 filter.o: ft_nm.h libft.h
+main.o: ft_nm.h libft.h
+list64.o: ft_nm.h libft.h
+elf.o: ft_nm.h libft.h
+list_symbols.o: ft_nm.h libft.h
+sort.o: ft_nm.h libft.h
+symbol32.o: ft_nm.h libft.h
+utils.o: ft_nm.h libft.h
+strings.o: ft_nm.h libft.h
+options.o: ft_nm.h libft.h
 list32.o: ft_nm.h libft.h
 symbol64.o: ft_nm.h libft.h
-sort.o: ft_nm.h libft.h
-options.o: ft_nm.h libft.h
-list_symbols.o: ft_nm.h libft.h
-symbol32.o: ft_nm.h libft.h
 %.o: %.c
 	@mkdir -p $(ODIR)
 	$(CC) -c $(CFLAGS) $< $(HFLAGS) -o $(ODIR)/$@
