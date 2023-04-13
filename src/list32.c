@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 21:44:48 by yforeau           #+#    #+#             */
-/*   Updated: 2023/04/13 18:48:23 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/04/13 19:17:38 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 static void			*get_section32(t_nm_file *file, Elf32_Shdr *header)
 {
-	if (header->sh_offset >= file->size || header->sh_size >= file->size
-		|| SIZE_MAX - file->size < header->sh_size)
+	size_t	sh_offset = header->sh_offset, sh_size = header->sh_size;
+
+	if (sh_offset >= file->size || sh_size >= file->size
+		|| SIZE_MAX - sh_offset < sh_size
+		|| sh_offset + sh_size > file->size)
 		return (NULL);
-	return (((uint8_t *)file->data) + header->sh_offset);
+	return (((uint8_t *)file->data) + sh_offset);
 }
 
 static Elf32_Shdr	*get_section_header32(t_nm_file *file,
