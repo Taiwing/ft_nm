@@ -17,8 +17,7 @@ static void			*get_section64(t_nm_file *file, Elf64_Shdr *header)
 	size_t	sh_offset = header->sh_offset, sh_size = header->sh_size;
 
 	if (sh_offset >= file->size || sh_size >= file->size
-		|| SIZE_MAX - sh_offset < sh_size
-		|| sh_offset + sh_size > file->size)
+		|| file->size - sh_offset < sh_size)
 		return (NULL);
 	return (((uint8_t *)file->data) + sh_offset);
 }

@@ -74,11 +74,10 @@ static int		load_elf32_header(Elf32_Ehdr *dest, Elf32_Ehdr *raw,
 		return (1);
 	ph_total_size = dest->e_phentsize * dest->e_phnum;
 	sh_total_size = dest->e_shentsize * dest->e_shnum;
-	if (dest->e_phoff > size || dest->e_shoff > size
-		|| SIZE_MAX - dest->e_phoff < ph_total_size
-		|| dest->e_phoff + ph_total_size > size
-		|| SIZE_MAX - dest->e_shoff < sh_total_size
-		|| dest->e_shoff + sh_total_size > size
+	if (dest->e_phoff >= size || dest->e_shoff >= size
+		|| ph_total_size >= size || sh_total_size >= size
+		|| size - dest->e_phoff < ph_total_size
+		|| size - dest->e_shoff < sh_total_size
 		|| dest->e_shstrndx >= dest->e_shnum)
 		return (1);
 	return (0);
@@ -112,11 +111,10 @@ static int		load_elf64_header(Elf64_Ehdr *dest, Elf64_Ehdr *raw,
 		return (1);
 	ph_total_size = dest->e_phentsize * dest->e_phnum;
 	sh_total_size = dest->e_shentsize * dest->e_shnum;
-	if (dest->e_phoff > size || dest->e_shoff > size
-		|| SIZE_MAX - dest->e_phoff < ph_total_size
-		|| dest->e_phoff + ph_total_size > size
-		|| SIZE_MAX - dest->e_shoff < sh_total_size
-		|| dest->e_shoff + sh_total_size > size
+	if (dest->e_phoff >= size || dest->e_shoff >= size
+		|| ph_total_size >= size || sh_total_size >= size
+		|| size - dest->e_phoff < ph_total_size
+		|| size - dest->e_shoff < sh_total_size
 		|| dest->e_shstrndx >= dest->e_shnum)
 		return (1);
 	return (0);
