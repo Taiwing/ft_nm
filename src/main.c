@@ -6,7 +6,7 @@
 /*   By: yforeau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 10:46:47 by yforeau           #+#    #+#             */
-/*   Updated: 2023/04/01 21:10:00 by yforeau          ###   ########.fr       */
+/*   Updated: 2023/04/13 18:59:58 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ static int		get_binary_file(t_nm_file *dest, char *path, t_nm_config *cfg)
 	{
 		close(fd);
 		return (!!ft_dprintf(2, "%s: file too small\n", cfg->exec));
+	}
+	else if (!S_ISREG(st.st_mode))
+	{
+		close(fd);
+		return (!!ft_dprintf(2, "%s: is not a regular file\n", cfg->exec));
 	}
 	else if ((dest->data = mmap(0, dest->size, PROT_READ, MAP_PRIVATE, fd, 0))
 		== MAP_FAILED)
