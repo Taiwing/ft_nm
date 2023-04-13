@@ -43,7 +43,7 @@ static int		get_binary_file(t_nm_file *dest, char *path, t_nm_config *cfg)
 	return (0);
 }
 
-void	nm(t_nm_config *cfg, char *path)
+static void		nm(t_nm_config *cfg, char *path)
 {
 	t_nm_file	file = { 0 };
 
@@ -66,7 +66,7 @@ void	nm(t_nm_config *cfg, char *path)
 		ft_exit(EXIT_FAILURE, "munmap: %s", strerror(errno));
 }
 
-int		main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	char		**args = NULL;
 	t_nm_config	cfg = {
